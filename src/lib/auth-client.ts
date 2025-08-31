@@ -4,6 +4,8 @@ import {
   adminClient,
   organizationClient,
 } from "better-auth/client/plugins";
+import { auth } from "./auth";
+import { headers } from "next/headers";
 
 export const authClient = createAuthClient({
   plugins: [phoneNumberClient(), adminClient(), organizationClient()],

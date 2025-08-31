@@ -1,7 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
-import AdminSidebar from "./_components/sidebar";
-import AdminNavbar from "./_components/navbar";
 import { cookies } from "next/headers";
+import ShopSidebar from "../_components/sidebar";
+import ShopNavbar from "../_components/navbar";
 
 export default async function Layout({
   children,
@@ -13,9 +13,9 @@ export default async function Layout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <main className="min-h-dvh flex w-full">
-        <AdminSidebar />
+        <ShopSidebar />
         <div className="flex-1 h-full">
-          <AdminNavbar />
+          <ShopNavbar />
           {children}
         </div>
       </main>
