@@ -1,3 +1,4 @@
+import { TFormDefaultProps } from "@/types/form";
 import {
   Form,
   FormControl,
@@ -6,22 +7,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { TSignIn } from "@/schema/sign-in";
-import { TFormDefaultProps } from "@/types/form";
 import AddonInput from "../addon-input";
-import PasswordInput from "../password-input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { TSignUp } from "@/schema/sign-up";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
-export default function SignInForm({
+export default function SignUpForm({
   form,
   onSubmit,
-}: TFormDefaultProps<TSignIn>) {
+}: TFormDefaultProps<TSignUp>) {
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="phone"
@@ -29,20 +28,7 @@ export default function SignInForm({
             <FormItem>
               <FormLabel>Phone</FormLabel>
               <FormControl>
-                <AddonInput prefix="+91" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput {...field} />
+                <AddonInput {...field} prefix="+91" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,18 +38,18 @@ export default function SignInForm({
           {form.formState.isSubmitting ? (
             <Loader2 className="animate-spin" />
           ) : (
-            <span>Sign In</span>
+            "Submit"
           )}
         </Button>
         <Separator orientation="horizontal" className="h-1" />
         <div className="text-center text-sm">
           <p>
-            Don&apos;t have an account?{" "}
+            Already have an account?{" "}
             <Link
-              href={"/auth/sign-up"}
+              href={"/auth/sign-in"}
               className="text-cyan-400 hover:underline underline-offset-1"
             >
-              Sign Up
+              Sign In
             </Link>
           </p>
         </div>

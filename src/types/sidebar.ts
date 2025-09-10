@@ -1,7 +1,10 @@
 import { Icon, LucideIcon } from "lucide-react";
+import { TypedRoute } from ".";
+import { UrlObject } from "url";
 
 export type TSidebarItem_Default = {
-  url: string;
+  id: string;
+  url: TypedRoute;
   icon: LucideIcon;
   label: string;
   isActive: (url: string) => boolean;
@@ -9,7 +12,8 @@ export type TSidebarItem_Default = {
 };
 
 export type TSidebarItem_Dynamic = {
-  url: (dynamic: string) => string;
+  id: string;
+  url: (dynamic: string) => UrlObject;
   icon: LucideIcon;
   label: string;
   isActive: (url: string) => boolean;

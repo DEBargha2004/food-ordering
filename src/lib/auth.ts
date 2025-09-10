@@ -5,16 +5,33 @@ import {
   admin as adminPlugin,
   openAPI,
   phoneNumber,
-  organization,
+  organization as organizationPlugin,
 } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
-import { authSchema } from "@/db/schema";
 import { ac, manager, owner } from "./permissions";
+import { organizationVerifierPlugin } from "./organization-verifier-plugin";
+import {
+  account,
+  invitation,
+  member,
+  organization,
+  session,
+  user,
+  verification,
+} from "@/db/schema";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
-    schema: authSchema,
+    schema: {
+      account,
+      invitation,
+      member,
+      organization,
+      session,
+      user,
+      verification,
+    },
   }),
   plugins: [
     nextCookies(),
@@ -38,12 +55,13 @@ export const auth = betterAuth({
     }),
     openAPI(),
     adminPlugin(),
-    organization({
+    organizationPlugin({
       ac,
       roles: {
         owner,
         manager,
       },
     }),
+    organizationVerifierPlugin(),
   ],
 });

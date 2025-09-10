@@ -1,22 +1,22 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { defaultValues, signInSchema, TSignIn } from "@/schema/sign-in";
+import { defaultValues, signUpSchema, TSignUp } from "@/schema/sign-up";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import SignInForm from "@/components/custom/forms/sign-in";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import SignUpForm from "@/components/custom/forms/sign-up";
 
 export default function Page() {
-  const form = useForm<TSignIn>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<TSignUp>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: defaultValues(),
   });
   const router = useRouter();
 
-  const onSubmit = async (formdata: TSignIn) => {
+  const onSubmit = async (formdata: TSignUp) => {
     formdata.phone = `+91${formdata.phone}`;
     localStorage.setItem("phone", formdata.phone);
 
@@ -40,7 +40,7 @@ export default function Page() {
         <CardTitle>Sign In</CardTitle>
       </CardHeader>
       <CardContent>
-        <SignInForm form={form} onSubmit={onSubmit} />
+        <SignUpForm form={form} onSubmit={onSubmit} />
       </CardContent>
     </Card>
   );

@@ -6,30 +6,28 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { TSignIn } from "@/schema/sign-in";
+import { TOnboarding } from "@/schema/onboarding";
 import { TFormDefaultProps } from "@/types/form";
-import AddonInput from "../addon-input";
 import PasswordInput from "../password-input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
+import { Input } from "@/components/ui/input";
 
-export default function SignInForm({
+export default function OnBoardingForm({
   form,
   onSubmit,
-}: TFormDefaultProps<TSignIn>) {
+}: TFormDefaultProps<TOnboarding>) {
   return (
     <Form {...form}>
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name="phone"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <AddonInput prefix="+91" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -48,25 +46,26 @@ export default function SignInForm({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <PasswordInput {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button className="w-full" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? (
             <Loader2 className="animate-spin" />
           ) : (
-            <span>Sign In</span>
+            <span>Submit</span>
           )}
         </Button>
-        <Separator orientation="horizontal" className="h-1" />
-        <div className="text-center text-sm">
-          <p>
-            Don&apos;t have an account?{" "}
-            <Link
-              href={"/auth/sign-up"}
-              className="text-cyan-400 hover:underline underline-offset-1"
-            >
-              Sign Up
-            </Link>
-          </p>
-        </div>
       </form>
     </Form>
   );

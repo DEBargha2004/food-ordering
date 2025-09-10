@@ -25,7 +25,7 @@ export default function AdminSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {adminSidebar.map((si) => (
-                <SidebarMenuItem key={si.url}>
+                <SidebarMenuItem key={si.id}>
                   <SidebarMenuButton asChild isActive={si.isActive(pathname)}>
                     <Link href={si.url}>
                       <si.icon />

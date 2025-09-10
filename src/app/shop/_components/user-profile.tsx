@@ -14,10 +14,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useSession } from "@/lib/auth-client";
+import { getAcronym } from "@/lib/utils";
 import { BadgeCheck, LogOut, User2 } from "lucide-react";
 
 export default function UserProfile() {
   const { isMobile } = useSidebar();
+  const { data, isPending } = useSession();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -26,10 +30,16 @@ export default function UserProfile() {
             <SidebarMenuButton className="ih-fit" size={"lg"}>
               <Avatar className="border size-8 rounded-lg shrink-0">
                 <AvatarImage />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarFallback>
+                  {getAcronym(data?.user?.name ?? "")}
+                </AvatarFallback>
               </Avatar>
               <div className="[&>*]:whitespace-nowrap">
-                <h3 className="font-semibold">John Doe</h3>
+                {isPending ? (
+                  <Skeleton className="w-14 h-5" />
+                ) : (
+                  <h3 className="font-semibold">{data?.user?.name}</h3>
+                )}
                 <p className="text-muted-foreground text-xs">Owner</p>
               </div>
             </SidebarMenuButton>

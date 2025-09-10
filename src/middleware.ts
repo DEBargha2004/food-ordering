@@ -1,4 +1,18 @@
-export default async function middleware() {}
+import micromatch from "micromatch";
+import { NextRequest, NextResponse } from "next/server";
+import { getCookieCache, getSessionCookie } from "better-auth/cookies";
+
+const publicRoutes = ["/", "/auth/**", "/api/auth/**"];
+
+export default async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
+  const isPublicRoute = micromatch.isMatch(path, publicRoutes);
+
+  if (isPublicRoute) return NextResponse.next();
+  const cookie = getSessionCookie(request);
+  if (!cookie)
+    return NextResponse.redirect(new URL("/auth/sign-in", request.url));
+}
 
 export const config = {
   matcher: [

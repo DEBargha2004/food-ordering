@@ -32,7 +32,7 @@ export default function ShopSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {shopSidebar.map((si) => (
-                <SidebarMenuItem key={si.url(shopId)}>
+                <SidebarMenuItem key={si.id}>
                   <SidebarMenuButton asChild isActive={si.isActive(pathname)}>
                     <Link href={si.url(shopId)}>
                       <si.icon />

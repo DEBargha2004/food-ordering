@@ -3,11 +3,7 @@ import { cookies } from "next/headers";
 import ShopSidebar from "../_components/sidebar";
 import ShopNavbar from "../_components/navbar";
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function Layout({ children }: LayoutProps<"/shop/[sid]">) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   return (

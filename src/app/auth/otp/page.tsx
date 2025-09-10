@@ -22,13 +22,14 @@ export default function Page() {
     await authClient.phoneNumber.verify({
       phoneNumber: phone,
       code: formdata.otp,
+      disableSession: false,
       fetchOptions: {
         onError(context) {
           toast.error(context.error.message + phone);
         },
         onSuccess(context) {
           toast.success("Sign In Successfull");
-          router.push("/");
+          router.push("/auth/onboarding");
         },
       },
     });

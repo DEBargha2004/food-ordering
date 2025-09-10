@@ -1,4 +1,4 @@
-import { TSidebarItem_Default, TSidebarItem_Dynamic } from "@/types/sidebar";
+import { TSidebarItem_Dynamic } from "@/types/sidebar";
 import {
   BadgeIndianRupee,
   Bike,
@@ -12,8 +12,9 @@ import micromatch from "micromatch";
 
 export const shopSidebar: TSidebarItem_Dynamic[] = [
   {
+    id: "dashboard",
     url(shopId) {
-      return `/shop/${shopId}`;
+      return new URL(`/shop/${shopId}`);
     },
     label: "Dashboard",
     pattern: "/shop/*",
@@ -23,8 +24,9 @@ export const shopSidebar: TSidebarItem_Dynamic[] = [
     },
   },
   {
+    id: "members",
     url(dynamic) {
-      return `/shop/${dynamic}/members`;
+      return new URL(`/shop/${dynamic}/members`);
     },
     label: "Members",
     icon: Users2,
@@ -34,8 +36,9 @@ export const shopSidebar: TSidebarItem_Dynamic[] = [
     },
   },
   {
+    id: "categories",
     url(dynamic) {
-      return `/shop/${dynamic}/categories`;
+      return new URL(`/shop/${dynamic}/categories`);
     },
     label: "Categories",
     icon: Boxes,
@@ -45,8 +48,9 @@ export const shopSidebar: TSidebarItem_Dynamic[] = [
     },
   },
   {
+    id: "products",
     url(dynamic) {
-      return `/shop/${dynamic}/products`;
+      return new URL(`/shop/${dynamic}/products`);
     },
     label: "Products",
     icon: CookingPot,
@@ -56,8 +60,9 @@ export const shopSidebar: TSidebarItem_Dynamic[] = [
     },
   },
   {
+    id: "orders",
     url(dynamic) {
-      return `/shop/${dynamic}/orders`;
+      return new URL(`/shop/${dynamic}/orders`);
     },
     label: "Orders",
     icon: NotebookPen,
@@ -67,8 +72,9 @@ export const shopSidebar: TSidebarItem_Dynamic[] = [
     },
   },
   {
+    id: "delivery",
     url(dynamic) {
-      return `/shop/${dynamic}/delivery`;
+      return new URL(`/shop/${dynamic}/delivery`);
     },
     label: "Delivery",
     icon: Bike,
@@ -78,8 +84,9 @@ export const shopSidebar: TSidebarItem_Dynamic[] = [
     },
   },
   {
+    id: "revenue",
     url(dynamic) {
-      return `/shop/${dynamic}/revenue`;
+      return new URL(`/shop/${dynamic}/revenue`);
     },
     label: "Revenue",
     icon: BadgeIndianRupee,

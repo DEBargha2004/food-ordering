@@ -4,7 +4,7 @@ import { RPCLink } from "@orpc/client/fetch";
 import { RouterClient } from "@orpc/server";
 
 const link = new RPCLink({
-  url: "http://localhost:3000",
+  url: "http://localhost:3000/api/rpc",
   headers: {},
 });
 
