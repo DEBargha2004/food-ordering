@@ -6,6 +6,7 @@ import AddressInfo from "./_components/address-info";
 import ContactInfo from "./_components/contact-info";
 import BrandingInfo from "./_components/branding-info";
 import OperationalInfo from "./_components/operational-info";
+import LicenseInfo from "./_components/license-info";
 
 export default function CreateShopForm({
   form,
@@ -18,6 +19,7 @@ export default function CreateShopForm({
         <AddressInfo />
         <ContactInfo />
         <BrandingInfo />
+        <LicenseInfo />
         <OperationalInfo />
       </form>
     </Form>

@@ -24,11 +24,6 @@ export default function BrandingInfo() {
     name: "contact.branding.logo",
   });
 
-  const banner = useWatch({
-    control: control,
-    name: "contact.branding.banner",
-  });
-
   const logoDropzone = useDropzone({
     accept: {
       "image/*": [],
@@ -37,7 +32,7 @@ export default function BrandingInfo() {
     async onDrop(acceptedFiles, fileRejections, event) {
       const [res, err] = await catchError(upload(acceptedFiles[0]));
       if (err) {
-        console.log(err);
+        // console.log(err);
         return toast.error(err.message);
       }
       setValue("contact.branding.logo", res!.path);
@@ -45,27 +40,8 @@ export default function BrandingInfo() {
     },
   });
 
-  const bannerDropzone = useDropzone({
-    accept: {
-      "image/*": [],
-    },
-    multiple: false,
-    async onDrop(acceptedFiles, fileRejections, event) {
-      const [res, err] = await catchError(upload(acceptedFiles[0]));
-      if (err) {
-        console.log(err);
-        return toast.error(err.message);
-      }
-      setValue("contact.branding.banner", res!.path);
-      toast.success("Banner Uploaded successfully");
-    },
-  });
-
   const handleDeleteImage = (type: "logo" | "banner") => {
-    setValue(
-      type === "logo" ? "contact.branding.logo" : "contact.branding.banner",
-      ""
-    );
+    setValue("contact.branding.logo", "");
   };
 
   return (
@@ -76,15 +52,19 @@ export default function BrandingInfo() {
           Upload your shop's visual assets
         </SubForm.Description>
       </SubForm.Header>
-      <SubForm.Body className="grid grid-cols-2">
+      <SubForm.Body className="grid">
         <FormField
           control={control}
           name="contact.branding.logo"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="flex flex-col items-start">
               <FormLabel>Shop Logo</FormLabel>
               <Input type="file" {...logoDropzone.getInputProps()} hidden />
-              <Button {...(!logo && logoDropzone.getRootProps())} type="button">
+              <Button
+                {...(!logo && logoDropzone.getRootProps())}
+                type="button"
+                className="w-full"
+              >
                 {logo ? (
                   <>
                     <CheckCircle2 /> <span>Logo Uploaded</span>
@@ -96,46 +76,12 @@ export default function BrandingInfo() {
               <ImageContainer
                 {...(!logo && logoDropzone.getRootProps())}
                 onDelete={() => handleDeleteImage("logo")}
+                className="h-32 aspect-square mt-3"
               >
                 {logo && (
                   <img
                     src={buildGetUrl(logo)}
-                    className="w-full object-cover"
-                  />
-                )}
-              </ImageContainer>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="contact.branding.banner"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Shop Banner</FormLabel>
-              <Input type="file" {...bannerDropzone.getInputProps()} hidden />
-              <Button
-                {...(!banner && bannerDropzone.getRootProps())}
-                type="button"
-              >
-                {banner ? (
-                  <>
-                    <CheckCircle2 /> <span>Banner Uploaded</span>
-                  </>
-                ) : (
-                  <span>Upload</span>
-                )}
-              </Button>
-              <ImageContainer
-                {...(!banner && bannerDropzone.getRootProps())}
-                onDelete={() => handleDeleteImage("banner")}
-              >
-                {banner && (
-                  <img
-                    src={buildGetUrl(banner)}
-                    className="w-full object-cover"
+                    className="size-full object-cover"
                   />
                 )}
               </ImageContainer>
@@ -157,7 +103,7 @@ function ImageContainer({
   return (
     <div
       className={cn(
-        "flex-1 w-full aspect-video flex flex-col justify-center items-center gap-2",
+        "flex flex-col justify-center items-center gap-2",
         "border rounded-lg overflow-hidden bg-accent relative group",
         className
       )}

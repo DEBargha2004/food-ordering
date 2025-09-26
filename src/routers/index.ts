@@ -4,6 +4,12 @@ import { categoryRouter } from "./category";
 import { shopRouter } from "./shop";
 import { accountRouter } from "./account";
 import { uploadRouter } from "./upload";
+import z from "zod";
+
+export const defaultSuccessMessageContract = z.object({
+  success: z.boolean(),
+  message: z.string(),
+});
 
 export const router = os.router({
   product: productRouter,

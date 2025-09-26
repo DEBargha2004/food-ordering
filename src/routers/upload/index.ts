@@ -19,9 +19,9 @@ const getPutObjectCommand = (key: string, mimetype: string) =>
     ContentType: mimetype,
   });
 
-export const uploadRouter = os.use(injectAuthMiddleware).router({
+export const uploadRouter = os.router({
   verified: os
-    .$context<{ auth: Auth }>()
+    .use(injectAuthMiddleware)
     .use(validateAuth)
     .router({
       uploadLogo: os
@@ -31,6 +31,19 @@ export const uploadRouter = os.use(injectAuthMiddleware).router({
         .handler(async ({ context, input }) => {
           const ext = mime.extension(input.mimetype);
           const key = `business/logo/${nanoid()}.${ext}`;
+          const putCommand = getPutObjectCommand(key, input.mimetype);
+
+          const url = await getSignedUrl(s3, putCommand, { expiresIn: 300 });
+
+          return { path: key, url };
+        }),
+      uploadLicense: os
+        .$context<{ auth: Auth }>()
+        .input(presignerInputContract)
+        .output(presignerOutputContract)
+        .handler(async ({ input }) => {
+          const ext = mime.extension(input.mimetype);
+          const key = `business/license/${nanoid()}.${ext}`;
           const putCommand = getPutObjectCommand(key, input.mimetype);
 
           const url = await getSignedUrl(s3, putCommand, { expiresIn: 300 });

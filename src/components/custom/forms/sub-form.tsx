@@ -7,7 +7,10 @@ function SubForm({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("p-6 border rounded-xl shadow space-y-8", className)}
+      className={cn(
+        "p-6 border rounded-xl shadow space-y-8 bg-accent/70",
+        className
+      )}
       {...props}
     >
       {children}

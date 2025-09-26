@@ -9,18 +9,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { TCreateShopSchema } from "@/schema/create-shop";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { Marker } from "react-leaflet/Marker";
 import { Popup } from "react-leaflet/Popup";
-import "leaflet/dist/leaflet.css";
+import dynamic from "next/dynamic";
+import { GeoLocation } from "./map";
+
+const Map = dynamic(() => import("./map"), { ssr: false });
 
 export default function AddressInfo() {
   const { control, setValue } = useFormContext<TCreateShopSchema>();
-  // useMapEvents({
-  //   click(e) {},
-  // });
+  const coords =
+    useWatch({
+      control: control,
+      name: "address.coordinates",
+    }) ?? null;
+
+  const handleChangePosition = (loc: GeoLocation) => {
+    if (loc?.length === 2)
+      setValue("address.coordinates", {
+        latitude: loc[0],
+        longitude: loc[1],
+      });
+    if (!loc) setValue("address.coordinates", undefined);
+  };
+
   return (
     <SubForm>
       <SubForm.Header>
@@ -113,18 +128,10 @@ export default function AddressInfo() {
             )}
           /> */}
         <div className="w-full aspect-video">
-          <MapContainer
-            center={[51.505, -0.09]}
-            zoom={13}
-            scrollWheelZoom={false}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[51.505, -0.09]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-          </MapContainer>
+          <Map
+            position={coords ? [coords.latitude, coords.longitude] : null}
+            setPosition={handleChangePosition}
+          />
         </div>
       </SubForm.Body>
     </SubForm>
